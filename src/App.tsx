@@ -1,27 +1,25 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Button from "@mui/material/Button";
+
+type Unit = "pack" | "kg";
+
+interface InventoryItem {
+  id: number;
+  name: string;
+  quantity: number;
+  unit: Unit;
+}
+
+const currentInventory: InventoryItem[] = [
+  { id: 1, name: "Proszek", quantity: 2, unit: "pack" },
+  { id: 2, name: "Banany", quantity: 1, unit: "kg" },
+];
 
 function App() {
   return (
     <>
-      <Button variant="contained">Hello World</Button>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      {currentInventory.map((item) => {
+        return <div>{item.name}</div>;
+      })}
     </>
   );
 }
