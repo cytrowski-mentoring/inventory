@@ -26,6 +26,7 @@ const currentInventory: InventoryItem[] = [
 // pack - 10 "units of" eggs, 300g of chips, 200ml yogurt
 // kg - 3 avocados
 // problem - updating inventory by all units applied
+// problem - different quantity for the same products in different packaging
 
 function App() {
   return (
