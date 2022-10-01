@@ -1,4 +1,8 @@
 import "./App.css";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 
 type Unit = "pack" | "kg";
 
@@ -17,9 +21,17 @@ const currentInventory: InventoryItem[] = [
 function App() {
   return (
     <>
-      {currentInventory.map((item) => {
-        return <div>{item.name}</div>;
-      })}
+      <List>
+        {currentInventory.map((item) => {
+          return (
+            <ListItem>
+              <ListItemButton>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
     </>
   );
 }
