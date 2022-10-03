@@ -13,22 +13,16 @@ import {
   TextField,
 } from "@mui/material";
 
-type Unit = "pack" | "kg" | "g" | "unit" | "jar" | "bottle" | "l" | "ml";
+//type Unit = "pack" | "kg" | "g" | "unit" | "jar" | "bottle" | "l" | "ml" | "can";
 const units = [
-  { value: "pack" },
-  { value: "kg" },
-  { value: "g" },
-  { value: "unit" },
-  { value: "jar" },
-  { value: "bottle" },
-];
+  { id: "pack 1 kg", type: "mass", value: 1000 },
+  { id: "jar 1 l", type: "volume", value: 1000 },
+  { id: "bottle 0.5 l", type: "volume", value: 500 },
+  { id: "pack 4 units", type: "quantity", value: 4 },
+  { id: "unit", type: "quantity", value: 1 },
+] as const;
 
-type ComplexUnit =
-  | { id: "pack 1 kg"; type: "mass"; value: 1000 }
-  | { id: "jar 1 l"; type: "volume"; value: 1000 }
-  | { id: "bottle 0.5 l"; type: "volume"; value: 500 }
-  | { id: "pack 4 units"; type: "quantity"; value: 4 }
-  | { id: "unit"; type: "quantity"; value: 1 };
+type ComplexUnit = typeof units[number];
 
 interface InventoryItem {
   id: number;
