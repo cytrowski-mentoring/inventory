@@ -4,14 +4,21 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import {
+  AppBar,
   Button,
+  CssBaseline,
   Divider,
+  Drawer,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   TextField,
+  Toolbar,
+  Typography,
 } from "@mui/material";
+import { FormEventHandler, Fragment, useState } from "react";
+import { Box } from "@mui/system";
 
 //type Unit = "pack" | "kg" | "g" | "unit" | "jar" | "bottle" | "l" | "ml" | "can";
 const units = [
@@ -50,38 +57,138 @@ const currentInventory: InventoryItem[] = [
 //some filters have to be optional and some have to be multiple choice
 
 function App() {
+  const drawerWidth = 180;
+  const [inventoryItems, setInventoryItems] = useState(currentInventory);
+  const handleSubmit: FormEventHandler = (event) => {
+    event.preventDefault();
+    const target = event.target as unknown as {
+      name: HTMLInputElement;
+      quantity: HTMLInputElement;
+      unit: HTMLSelectElement;
+    };
+    const name = target.name.value;
+    const quantity = Number(target.quantity.value);
+    const unit = target.unit.value as ComplexUnit["id"];
+    setInventoryItems((oldState) => [
+      { name, quantity, unit, id: Date.now() },
+      ...oldState,
+    ]);
+    target.name.value = "";
+    target.quantity.value = "";
+    target.unit.value = "";
+    //console.log(event.target.unit.value);
+  };
+
   return (
     <>
-      <FormControl margin="normal">
-        <TextField id="1" label="Name of the product" variant="outlined" />
-        <TextField id="2" label="Current stock" variant="outlined" />
-        <FormControl>
-          <InputLabel id="4">Unit of stock</InputLabel>
-          <Select id="3" label="Unit of stock" variant="outlined">
-            {units.map((option) => (
-              <MenuItem value={option.value}>{option.value}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button variant="contained">Add to inventory</Button>
-      </FormControl>
-      <List>
-        {currentInventory.map((item) => {
-          return (
-            <>
-              <ListItem>
-                <ListItemButton>
-                  <ListItemText
-                    primary={item.name}
-                    secondary={`${item.quantity} ${item.unit ?? ""}`}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-            </>
-          );
-        })}
-      </List>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <Toolbar>
+            <Typography variant="h6" noWrap component="div">
+              Inventory
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+        >
+          <Toolbar />
+          <Box sx={{ overflow: "auto" }}>
+            <List>
+              {[
+                "Dashboard",
+                "Inventory",
+                "Shopping list",
+                "Categories",
+                "Statistics",
+                "Stores",
+                "My Account",
+                "Settings",
+              ].map((text) => (
+                <ListItem key={text} disablePadding>
+                  <ListItemButton>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Toolbar />
+          <Button variant="contained" type="submit">
+            Add a product
+          </Button>
+          <form onSubmit={handleSubmit}>
+            <FormControl margin="normal">
+              <TextField
+                id="1"
+                label="Name of the product"
+                variant="outlined"
+                name="name"
+              />
+              <TextField
+                id="2"
+                label="Current stock"
+                variant="outlined"
+                name="quantity"
+              />
+              <FormControl>
+                <InputLabel id="4">Unit of stock</InputLabel>
+                <Select
+                  id="3"
+                  label="Unit of stock"
+                  variant="outlined"
+                  defaultValue=""
+                  name="unit"
+                >
+                  <MenuItem value="" disabled>
+                    Pick unit
+                  </MenuItem>
+                  {units.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.id}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button variant="contained" type="submit">
+                Add to inventory
+              </Button>
+            </FormControl>
+          </form>
+          <List>
+            {inventoryItems.map((item) => {
+              return (
+                <Fragment key={item.id}>
+                  <ListItem>
+                    <ListItemButton>
+                      <ListItemText
+                        primary={item.name}
+                        secondary={`${item.quantity} ${item.unit ?? ""}`}
+                      />
+                    </ListItemButton>
+                    <ListItemButton>Edit</ListItemButton>
+                  </ListItem>
+                  <Divider />
+                </Fragment>
+              );
+            })}
+          </List>
+        </Box>
+      </Box>
     </>
   );
 }
