@@ -4,11 +4,23 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Inventory } from "./components/Inventory";
+import { AddItemForm } from "./components/AddItemForm";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        path: "inventory",
+        element: <Inventory />,
+      },
+      {
+        path: "add-item",
+        element: <AddItemForm />,
+      },
+    ],
   },
 ]);
 
