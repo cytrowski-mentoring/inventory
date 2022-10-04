@@ -5,22 +5,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import {
   AppBar,
-  Button,
   CssBaseline,
-  Divider,
   Drawer,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { FormEventHandler, Fragment, useState } from "react";
 import { Box } from "@mui/system";
-import { Outlet } from "react-router-dom";
-import { ComplexUnit, currentInventory, units } from "./utils";
+import { Outlet, NavLink } from "react-router-dom";
 
 //type Unit = "pack" | "kg" | "g" | "unit" | "jar" | "bottle" | "l" | "ml" | "can";
 
@@ -32,6 +23,17 @@ import { ComplexUnit, currentInventory, units } from "./utils";
 
 //filters - by category of products, by shop?
 //some filters have to be optional and some have to be multiple choice
+
+const menuitems = [
+  { label: "Dashboard", href: "/" },
+  { label: "Inventory", href: "/inventory" },
+  { label: "Shopping list", href: "shopping-list" },
+  { label: "Categories", href: "/categories" },
+  { label: "Statistics", href: "/statistics" },
+  { label: "Stores", href: "/stores" },
+  { label: "My Account", href: "/my-account" },
+  { label: "Settings", href: "/settings" },
+];
 
 function App() {
   const drawerWidth = 180;
@@ -64,19 +66,10 @@ function App() {
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>
             <List>
-              {[
-                "Dashboard",
-                "Inventory",
-                "Shopping list",
-                "Categories",
-                "Statistics",
-                "Stores",
-                "My Account",
-                "Settings",
-              ].map((text) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemText primary={text} />
+              {menuitems.map((menuitem) => (
+                <ListItem key={menuitem.href} disablePadding>
+                  <ListItemButton component={NavLink} to={menuitem.href}>
+                    <ListItemText primary={menuitem.label} />
                   </ListItemButton>
                 </ListItem>
               ))}
