@@ -6,6 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Inventory } from "./components/Inventory";
 import { AddItemForm } from "./components/AddItemForm";
+import { ShoppingList } from "./components/ShoppingList";
+import { Categories } from "./components/Categories";
+import { Statistics } from "./components/Statistics";
+import { Stores } from "./components/Stores";
+import { MyAccount } from "./components/MyAccount";
+import { Settings } from "./components/Settings";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +25,30 @@ const router = createBrowserRouter([
       {
         path: "add-item",
         element: <AddItemForm />,
+      },
+      {
+        path: "shopping-list",
+        element: <ShoppingList />,
+      },
+      {
+        path: "categories",
+        element: <Categories />,
+      },
+      {
+        path: "statistics",
+        element: <Statistics />,
+      },
+      {
+        path: "stores",
+        element: <Stores />,
+      },
+      {
+        path: "my-account",
+        element: <MyAccount />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },

@@ -27,7 +27,7 @@ import { Outlet, NavLink } from "react-router-dom";
 const menuitems = [
   { label: "Dashboard", href: "/" },
   { label: "Inventory", href: "/inventory" },
-  { label: "Shopping list", href: "shopping-list" },
+  { label: "Shopping list", href: "/shopping-list" },
   { label: "Categories", href: "/categories" },
   { label: "Statistics", href: "/statistics" },
   { label: "Stores", href: "/stores" },
