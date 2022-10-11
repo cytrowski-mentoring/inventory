@@ -34,9 +34,9 @@
       "quantity": 250
     },
     {
-      "name": "M",
-      "unitId": 2,
-      "quantity": 4,
+      "name": "C",
+      "unitId": 1,
+      "quantity": 5,
       "id": 7
     }
   ],

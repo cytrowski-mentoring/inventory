@@ -29,9 +29,9 @@ export const apiRemoveProduct = (productId: number) => {
 
 export const apiEditProduct = (
   productId: number,
-  productStock: number,
-  productName: string,
-  productUnit: string
+  quantity: number,
+  name: string,
+  unitId: number
 ) => {
   return fetch(`http://localhost:9000/inventory/${productId}`, {
     method: "PATCH",
@@ -39,15 +39,21 @@ export const apiEditProduct = (
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: productName,
-      unit: productUnit,
-      stock: productStock,
+      name: name,
+      unitId: unitId,
+      quantity: quantity,
     }),
   });
 };
 
 export const getInventory = (): Promise<InventoryItem[]> => {
   return fetch("http://localhost:9000/inventory").then((response) =>
+    response.json()
+  );
+};
+
+export const getProduct = (itemId: number): Promise<InventoryItem> => {
+  return fetch(`http://localhost:9000/inventory/${itemId}`).then((response) =>
     response.json()
   );
 };

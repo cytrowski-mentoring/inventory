@@ -12,6 +12,7 @@ import { Statistics } from "./components/Statistics";
 import { Stores } from "./components/Stores";
 import { MyAccount } from "./components/MyAccount";
 import { Settings } from "./components/Settings";
+import { EditItemForm } from "./components/EditItemForm";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "add-item",
         element: <AddItemForm />,
+      },
+      {
+        path: "edit-item/:itemId",
+        element: <EditItemForm />,
       },
       {
         path: "shopping-list",

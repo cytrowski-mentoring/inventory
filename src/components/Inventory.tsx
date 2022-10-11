@@ -11,8 +11,10 @@ import { InventoryItem, Unit } from "../utils";
 import { Link } from "react-router-dom";
 import { apiRemoveProduct, getInventory } from "../services/inventory";
 import { getUnits } from "../services/units";
+import { useNavigate } from "react-router-dom";
 
 export const Inventory = () => {
+  const navigate = useNavigate();
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
   useEffect(() => {
@@ -40,7 +42,13 @@ export const Inventory = () => {
                     secondary={`${item.quantity} ${item.unit ?? ""}`}
                   />
                 </ListItemButton>
-                <ListItemButton>Edit</ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(`/edit-item/${item.id}`);
+                  }}
+                >
+                  Edit
+                </ListItemButton>
                 <ListItemButton
                   onClick={() => {
                     apiRemoveProduct(item.id).then(() => {
