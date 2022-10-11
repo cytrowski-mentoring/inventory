@@ -6,9 +6,18 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
+import { apiAddProductToInventory } from "../services/inventory";
+import { Unit } from "../utils";
 
 export const AddItemForm = () => {
+  const [units, setUnits] = useState<Unit[]>([]);
+  useEffect(() => {
+    fetch("http://localhost:9000/units")
+      .then((response) => response.json())
+      .then(setUnits);
+  }, []);
+
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
     const target = event.target as unknown as {
@@ -18,11 +27,8 @@ export const AddItemForm = () => {
     };
     const name = target.name.value;
     const quantity = Number(target.quantity.value);
-    // const unit = target.unit.value as ComplexUnit["id"];
-    // setInventoryItems((oldState) => [
-    //   { name, quantity, unit, id: Date.now() },
-    //   ...oldState,
-    // ]);
+    const unit = Number(target.unit.value) as Unit["id"];
+    apiAddProductToInventory(quantity, name, unit);
     target.name.value = "";
     target.quantity.value = "";
     target.unit.value = "";
@@ -55,11 +61,11 @@ export const AddItemForm = () => {
             <MenuItem value="" disabled>
               Pick unit
             </MenuItem>
-            {/* {units.map((option) => (
+            {units.map((option) => (
               <MenuItem key={option.id} value={option.id}>
-                {option.id}
+                {option.label}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
         </FormControl>
         <Button variant="contained" type="submit">

@@ -43,6 +43,7 @@ export const Inventory = () => {
                   />
                 </ListItemButton>
                 <ListItemButton>Edit</ListItemButton>
+                <ListItemButton>Delete</ListItemButton>
               </ListItem>
               <Divider />
             </Fragment>
