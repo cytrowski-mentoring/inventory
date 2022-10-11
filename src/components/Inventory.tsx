@@ -9,7 +9,7 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { InventoryItem, Unit } from "../utils";
 import { Link } from "react-router-dom";
-import { getInventory } from "../services/inventory";
+import { apiRemoveProduct, getInventory } from "../services/inventory";
 import { getUnits } from "../services/units";
 
 export const Inventory = () => {
@@ -41,7 +41,15 @@ export const Inventory = () => {
                   />
                 </ListItemButton>
                 <ListItemButton>Edit</ListItemButton>
-                <ListItemButton>Delete</ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    apiRemoveProduct(item.id).then(() => {
+                      getInventory().then(setInventoryItems);
+                    });
+                  }}
+                >
+                  Delete
+                </ListItemButton>
               </ListItem>
               <Divider />
             </Fragment>

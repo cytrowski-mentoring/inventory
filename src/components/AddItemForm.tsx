@@ -10,13 +10,14 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { apiAddProductToInventory } from "../services/inventory";
 import { getUnits } from "../services/units";
 import { Unit } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 export const AddItemForm = () => {
   const [units, setUnits] = useState<Unit[]>([]);
   useEffect(() => {
     getUnits().then(setUnits);
   }, []);
-
+  const navigate = useNavigate();
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
     const target = event.target as unknown as {
@@ -27,7 +28,9 @@ export const AddItemForm = () => {
     const name = target.name.value;
     const quantity = Number(target.quantity.value);
     const unit = Number(target.unit.value) as Unit["id"];
-    apiAddProductToInventory(quantity, name, unit);
+    apiAddProductToInventory(quantity, name, unit).then(() => {
+      navigate("/inventory");
+    });
     target.name.value = "";
     target.quantity.value = "";
     target.unit.value = "";
