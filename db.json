@@ -1,0 +1,17 @@
+{
+  "inventory": [
+    { "id": 1, "name": "Chips", "quantity": 2 },
+    { "id": 2, "name": "Bananas", "quantity": 1 },
+    { "id": 3, "name": "Garlic", "quantity": 1, "unitId": 5 },
+    { "id": 4, "name": "Jam", "quantity": 1, "unitId": 2 },
+    { "id": 5, "name": "Olive oil", "quantity": 1, "unitId": 3 },
+    { "id": 6, "name": "Blackberries", "quantity": 250 }
+  ],
+  "units": [
+    { "id": 1, "label": "pack 1 kg", "type": "mass", "value": 1000 },
+    { "id": 2, "label": "jar 1 l", "type": "volume", "value": 1000 },
+    { "id": 3, "label": "bottle 0.5 l", "type": "volume", "value": 500 },
+    { "id": 4, "label": "pack 4 units", "type": "quantity", "value": 4 },
+    { "id": 5, "label": "unit", "type": "quantity", "value": 1 }
+  ]
+}

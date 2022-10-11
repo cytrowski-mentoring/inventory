@@ -7,10 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import { FormEventHandler, useState } from "react";
-import { ComplexUnit, currentInventory, units } from "../utils";
 
 export const AddItemForm = () => {
-  const [inventoryItems, setInventoryItems] = useState(currentInventory);
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
     const target = event.target as unknown as {
@@ -20,11 +18,11 @@ export const AddItemForm = () => {
     };
     const name = target.name.value;
     const quantity = Number(target.quantity.value);
-    const unit = target.unit.value as ComplexUnit["id"];
-    setInventoryItems((oldState) => [
-      { name, quantity, unit, id: Date.now() },
-      ...oldState,
-    ]);
+    // const unit = target.unit.value as ComplexUnit["id"];
+    // setInventoryItems((oldState) => [
+    //   { name, quantity, unit, id: Date.now() },
+    //   ...oldState,
+    // ]);
     target.name.value = "";
     target.quantity.value = "";
     target.unit.value = "";
@@ -57,11 +55,11 @@ export const AddItemForm = () => {
             <MenuItem value="" disabled>
               Pick unit
             </MenuItem>
-            {units.map((option) => (
+            {/* {units.map((option) => (
               <MenuItem key={option.id} value={option.id}>
                 {option.id}
               </MenuItem>
-            ))}
+            ))} */}
           </Select>
         </FormControl>
         <Button variant="contained" type="submit">
