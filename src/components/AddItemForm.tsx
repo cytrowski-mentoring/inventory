@@ -8,14 +8,13 @@ import {
 } from "@mui/material";
 import { FormEventHandler, useEffect, useState } from "react";
 import { apiAddProductToInventory } from "../services/inventory";
+import { getUnits } from "../services/units";
 import { Unit } from "../utils";
 
 export const AddItemForm = () => {
   const [units, setUnits] = useState<Unit[]>([]);
   useEffect(() => {
-    fetch("http://localhost:9000/units")
-      .then((response) => response.json())
-      .then(setUnits);
+    getUnits().then(setUnits);
   }, []);
 
   const handleSubmit: FormEventHandler = (event) => {

@@ -1,3 +1,5 @@
+import { InventoryItem } from "../utils";
+
 export const apiAddProductToInventory = (
   quantity: number,
   name: string,
@@ -42,4 +44,10 @@ export const apiEditProduct = (
       stock: productStock,
     }),
   });
+};
+
+export const getInventory = (): Promise<InventoryItem[]> => {
+  return fetch("http://localhost:9000/inventory").then((response) =>
+    response.json()
+  );
 };

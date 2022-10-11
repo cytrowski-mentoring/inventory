@@ -9,17 +9,15 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { InventoryItem, Unit } from "../utils";
 import { Link } from "react-router-dom";
+import { getInventory } from "../services/inventory";
+import { getUnits } from "../services/units";
 
 export const Inventory = () => {
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
   useEffect(() => {
-    fetch("http://localhost:9000/inventory")
-      .then((response) => response.json())
-      .then(setInventoryItems);
-    fetch("http://localhost:9000/units")
-      .then((response) => response.json())
-      .then(setUnits);
+    getInventory().then(setInventoryItems);
+    getUnits().then(setUnits);
   }, []);
   const items = inventoryItems.map((item) =>
     item.unitId === undefined
