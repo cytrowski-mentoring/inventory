@@ -5,6 +5,12 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { InventoryItem, Unit } from "../utils";
@@ -31,39 +37,53 @@ export const Inventory = () => {
       <Button variant="contained" type="submit" component={Link} to="/add-item">
         Add a product
       </Button>
-      <List>
-        {items.map((item) => {
-          return (
-            <Fragment key={item.id}>
-              <ListItem>
-                <ListItemButton>
-                  <ListItemText
-                    primary={item.name}
-                    secondary={`${item.quantity} ${item.unit ?? ""}`}
-                  />
-                </ListItemButton>
-                <ListItemButton
-                  onClick={() => {
-                    navigate(`/edit-item/${item.id}`);
-                  }}
-                >
-                  Edit
-                </ListItemButton>
-                <ListItemButton
-                  onClick={() => {
-                    apiRemoveProduct(item.id).then(() => {
-                      getInventory().then(setInventoryItems);
-                    });
-                  }}
-                >
-                  Delete
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-            </Fragment>
-          );
-        })}
-      </List>
+      <TableContainer>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name of the product</TableCell>
+              <TableCell align="right">Stock</TableCell>
+              <TableCell>Unit</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Shop</TableCell>
+              <TableCell>Options</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {items.map((item) => {
+              return (
+                <TableRow key={item.id}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                  <TableCell>{item.unit}</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        navigate(`/edit-item/${item.id}`);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        apiRemoveProduct(item.id).then(() => {
+                          getInventory().then(setInventoryItems);
+                        });
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };
