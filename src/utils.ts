@@ -4,6 +4,8 @@ export interface InventoryItem {
   quantity: number;
   unitId: number;
   unit?: string;
+  isDisabled?: boolean;
+  isEssential?: boolean;
 }
 
 export interface Unit {

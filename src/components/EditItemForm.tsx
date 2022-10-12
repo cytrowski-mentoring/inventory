@@ -1,8 +1,12 @@
 import {
   Button,
   FormControl,
+  FormControlLabel,
+  FormLabel,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   TextField,
 } from "@mui/material";
@@ -29,16 +33,29 @@ export const EditItemForm = () => {
       name: HTMLInputElement;
       quantity: HTMLInputElement;
       unit: HTMLSelectElement;
+      status: HTMLInputElement;
+      essentiality: HTMLInputElement;
     };
     const name = target.name.value;
     const quantity = Number(target.quantity.value);
     const unit = Number(target.unit.value) as Unit["id"];
-    apiEditProduct(Number(itemId), quantity, name, unit).then(() => {
+    const status = target.status.value === "disabled";
+    const essentiality = target.essentiality.value === "essential";
+    apiEditProduct(
+      Number(itemId),
+      quantity,
+      name,
+      unit,
+      status,
+      essentiality
+    ).then(() => {
       navigate("/inventory");
     });
     target.name.value = "";
     target.quantity.value = "";
     target.unit.value = "";
+    target.status.value = "disabled";
+    target.essentiality.value = "non-essential";
     //console.log(event.target.unit.value);
   };
   if (product === null) {
@@ -79,6 +96,42 @@ export const EditItemForm = () => {
               </MenuItem>
             ))}
           </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Status</FormLabel>
+          <RadioGroup
+            name="status"
+            defaultValue={product.isDisabled ? "disabled" : "active"}
+          >
+            <FormControlLabel
+              value="active"
+              control={<Radio />}
+              label="Active"
+            />
+            <FormControlLabel
+              value="disabled"
+              control={<Radio />}
+              label="Disabled"
+            />
+          </RadioGroup>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Essentiality</FormLabel>
+          <RadioGroup
+            name="essentiality"
+            defaultValue={product.isEssential ? "essential" : "non-essential"}
+          >
+            <FormControlLabel
+              value="essential"
+              control={<Radio />}
+              label="Essential"
+            />
+            <FormControlLabel
+              value="non-essential"
+              control={<Radio />}
+              label="Non-essential"
+            />
+          </RadioGroup>
         </FormControl>
         <Button variant="contained" type="submit">
           Update product

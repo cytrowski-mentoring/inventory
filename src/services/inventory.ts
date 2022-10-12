@@ -3,7 +3,9 @@ import { InventoryItem } from "../utils";
 export const apiAddProductToInventory = (
   quantity: number,
   name: string,
-  unitId: number
+  unitId: number,
+  isDisabled: boolean,
+  isEssential: boolean
 ) => {
   return fetch("http://localhost:9000/inventory", {
     method: "POST",
@@ -14,6 +16,8 @@ export const apiAddProductToInventory = (
       name: name,
       unitId: unitId,
       quantity: quantity,
+      isDisabled: isDisabled,
+      isEssential: isEssential,
     }),
   });
 };
@@ -31,7 +35,9 @@ export const apiEditProduct = (
   productId: number,
   quantity: number,
   name: string,
-  unitId: number
+  unitId: number,
+  isDisabled: boolean,
+  isEssential: boolean
 ) => {
   return fetch(`http://localhost:9000/inventory/${productId}`, {
     method: "PATCH",
@@ -42,6 +48,8 @@ export const apiEditProduct = (
       name: name,
       unitId: unitId,
       quantity: quantity,
+      isDisabled: isDisabled,
+      isEssential: isEssential,
     }),
   });
 };

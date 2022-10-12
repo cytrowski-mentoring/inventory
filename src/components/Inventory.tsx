@@ -48,6 +48,8 @@ export const Inventory = () => {
               <TableCell>Price</TableCell>
               <TableCell>Shop</TableCell>
               <TableCell>Options</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Essentiality</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,6 +79,12 @@ export const Inventory = () => {
                     >
                       Delete
                     </Button>
+                  </TableCell>
+                  <TableCell>
+                    {item.isDisabled ? "Disabled" : "Active"}
+                  </TableCell>
+                  <TableCell>
+                    {item.isEssential ? "Essential" : "Non-essential"}
                   </TableCell>
                 </TableRow>
               );

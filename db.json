@@ -38,7 +38,9 @@
       "unitId": 1,
       "quantity": 5,
       "id": 7,
-      "label": "am"
+      "label": "am",
+      "isDisabled": true,
+      "isEssential": true
     }
   ],
   "units": [
