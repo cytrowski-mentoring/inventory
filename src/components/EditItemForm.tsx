@@ -7,11 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import { FormEventHandler, useEffect, useState } from "react";
-import {
-  apiAddProductToInventory,
-  apiEditProduct,
-  getProduct,
-} from "../services/inventory";
+import { apiEditProduct, getProduct } from "../services/inventory";
 import { getUnits } from "../services/units";
 import { InventoryItem, Unit } from "../utils";
 import { useNavigate, useParams } from "react-router-dom";

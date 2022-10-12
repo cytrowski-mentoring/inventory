@@ -13,6 +13,8 @@ import { Stores } from "./components/Stores";
 import { MyAccount } from "./components/MyAccount";
 import { Settings } from "./components/Settings";
 import { EditItemForm } from "./components/EditItemForm";
+import { AddUnitForm } from "./components/AddUnitForm";
+import { EditUnitForm } from "./components/EditUnitForm";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "edit-item/:itemId",
         element: <EditItemForm />,
+      },
+      {
+        path: "add-unit",
+        element: <AddUnitForm />,
+      },
+      {
+        path: "edit-unit/:unitId",
+        element: <EditUnitForm />,
       },
       {
         path: "shopping-list",

@@ -37,7 +37,8 @@
       "name": "C",
       "unitId": 1,
       "quantity": 5,
-      "id": 7
+      "id": 7,
+      "label": "am"
     }
   ],
   "units": [
@@ -70,6 +71,10 @@
       "label": "unit",
       "type": "quantity",
       "value": 1
+    },
+    {
+      "label": "test2",
+      "id": 6
     }
   ]
 }
