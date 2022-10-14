@@ -12,3 +12,8 @@ export interface Unit {
   id: number;
   label: string;
 }
+
+export interface Store {
+  id: number;
+  label: string;
+}

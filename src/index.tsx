@@ -15,6 +15,8 @@ import { Settings } from "./components/Settings";
 import { EditItemForm } from "./components/EditItemForm";
 import { AddUnitForm } from "./components/AddUnitForm";
 import { EditUnitForm } from "./components/EditUnitForm";
+import { AddStoreForm } from "./components/AddStoreForm";
+import { EditStoreForm } from "./components/EditStoreForm";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
       {
         path: "stores",
         element: <Stores />,
+      },
+      {
+        path: "add-store",
+        element: <AddStoreForm />,
+      },
+      {
+        path: "edit-store/:storeId",
+        element: <EditStoreForm />,
       },
       {
         path: "my-account",

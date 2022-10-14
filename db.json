@@ -78,5 +78,23 @@
       "label": "test23",
       "id": 6
     }
+  ],
+  "stores": [
+    {
+      "id": 1,
+      "label": "Drugstore"
+    },
+    {
+      "id": 2,
+      "label": "Supermarket"
+    },
+    {
+      "id": 3,
+      "label": "Greens"
+    },
+    {
+      "label": "test",
+      "id": 4
+    }
   ]
 }
