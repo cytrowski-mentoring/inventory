@@ -1,15 +1,9 @@
 import { Button, FormControl, TextField } from "@mui/material";
-import { FormEventHandler, useEffect, useState } from "react";
-import { apiAddUnit, getUnits } from "../services/units";
-import { Store, Unit } from "../utils";
+import { FormEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiAddStore, getStores } from "../services/stores";
+import { apiAddStore } from "../services/stores";
 
 export const AddStoreForm = () => {
-  const [stores, setStores] = useState<Store[]>([]);
-  useEffect(() => {
-    getStores().then(setStores);
-  }, []);
   const navigate = useNavigate();
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -22,9 +16,8 @@ export const AddStoreForm = () => {
       navigate("/stores");
     });
     target.label.value = "";
-
-    //console.log(event.target.unit.value);
   };
+  
   return (
     <form onSubmit={handleSubmit}>
       <FormControl margin="normal">

@@ -1,8 +1,7 @@
 import { Button, FormControl, TextField } from "@mui/material";
 import { FormEventHandler, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Store, Unit } from "../utils";
-import { apiEditUnit, getUnit } from "../services/units";
+import { Store } from "../utils";
 import { apiEditStore, getStore } from "../services/stores";
 
 export const EditStoreForm = () => {
@@ -24,11 +23,12 @@ export const EditStoreForm = () => {
       navigate("/stores");
     });
     target.label.value = "";
-    //console.log(event.target.unit.value);
   };
+
   if (store === null) {
     return <div>Loading store data</div>;
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <FormControl margin="normal">

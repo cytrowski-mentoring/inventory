@@ -23,11 +23,12 @@ export const EditUnitForm = () => {
       navigate("/settings");
     });
     target.label.value = "";
-    //console.log(event.target.unit.value);
   };
+  
   if (unit === null) {
     return <div>Loading unit data</div>;
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <FormControl margin="normal">

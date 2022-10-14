@@ -1,3 +1,3 @@
 export const Categories = () => {
-  return <div>Categories </div>;
+  return <div>Categories</div>;
 };

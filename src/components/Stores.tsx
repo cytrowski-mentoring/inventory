@@ -7,9 +7,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import { Store, Unit } from "../utils";
+import { Store } from "../utils";
 import { useNavigate, Link } from "react-router-dom";
-import { apiRemoveUnit, getUnits } from "../services/units";
 import { apiRemoveStore, getStores } from "../services/stores";
 
 export const Stores = () => {
@@ -37,7 +36,6 @@ export const Stores = () => {
                 <ListItemButton>
                   <ListItemText
                     primary={store.label}
-                    //secondary={`${item.quantity} ${item.unit ?? ""}`}
                   />
                 </ListItemButton>
                 <ListItemButton

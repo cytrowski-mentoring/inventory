@@ -31,7 +31,6 @@ export const Settings = () => {
                 <ListItemButton>
                   <ListItemText
                     primary={unit.label}
-                    //secondary={`${item.quantity} ${item.unit ?? ""}`}
                   />
                 </ListItemButton>
                 <ListItemButton
