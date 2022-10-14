@@ -55,12 +55,14 @@ export const InventoryForm = ({ onFormComplete, submitButtonLabel }: Props) => {
       quantity,
       name,
       unitId: unit,
-      status,
-      essentiality,
+      isDisabled: status,
+      isEssential: essentiality,
     };
+
     onFormComplete(data).then(() => {
       navigate("/inventory");
     });
+    
     target.name.value = "";
     target.quantity.value = "";
     target.unit.value = "";

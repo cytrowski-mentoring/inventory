@@ -45,10 +45,12 @@
     {
       "id": 8,
       "quantity": 2,
-      "name": "Zupa2",
+      "name": "Zupa23",
       "unitId": 2,
       "status": false,
-      "essentiality": true
+      "essentiality": true,
+      "isDisabled": true,
+      "isEssential": true
     }
   ],
   "units": [
