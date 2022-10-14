@@ -11,12 +11,17 @@ import {
   TextField,
 } from "@mui/material";
 import { FormEventHandler, useEffect, useState } from "react";
-import { apiEditProduct, getProduct } from "../services/inventory";
-import { getUnits } from "../services/units";
-import { InventoryItem, Unit } from "../utils";
+import { getProduct } from "../../services/inventory";
+import { getUnits } from "../../services/units";
+import { InventoryItem, Unit } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const EditItemForm = () => {
+interface Props {
+  onFormComplete: (data: InventoryItem) => Promise<Response>;
+  submitButtonLabel: string;
+}
+
+export const InventoryForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   const { itemId } = useParams();
   const [units, setUnits] = useState<Unit[]>([]);
   const [product, setProduct] = useState<InventoryItem | null>(null);
@@ -24,6 +29,9 @@ export const EditItemForm = () => {
     getUnits().then(setUnits);
   }, []);
   useEffect(() => {
+    if (itemId === undefined) {
+      return;
+    }
     getProduct(Number(itemId)).then(setProduct);
   }, [itemId]);
   const navigate = useNavigate();
@@ -41,14 +49,16 @@ export const EditItemForm = () => {
     const unit = Number(target.unit.value) as Unit["id"];
     const status = target.status.value === "disabled";
     const essentiality = target.essentiality.value === "essential";
-    apiEditProduct(
-      Number(itemId),
+
+    const data = {
+      id: Number(itemId),
       quantity,
       name,
-      unit,
+      unitId: unit,
       status,
-      essentiality
-    ).then(() => {
+      essentiality,
+    };
+    onFormComplete(data).then(() => {
       navigate("/inventory");
     });
     target.name.value = "";
@@ -56,9 +66,8 @@ export const EditItemForm = () => {
     target.unit.value = "";
     target.status.value = "disabled";
     target.essentiality.value = "non-essential";
-    //console.log(event.target.unit.value);
   };
-  if (product === null) {
+  if (product === null && itemId !== undefined) {
     return <div>Loading product data</div>;
   }
   return (
@@ -69,14 +78,14 @@ export const EditItemForm = () => {
           label="Name of the product"
           variant="outlined"
           name="name"
-          defaultValue={product.name}
+          defaultValue={product?.name}
         />
         <TextField
           id="2"
           label="Current stock"
           variant="outlined"
           name="quantity"
-          defaultValue={product.quantity}
+          defaultValue={product?.quantity}
         />
         <FormControl>
           <InputLabel id="4">Unit of stock</InputLabel>
@@ -84,7 +93,7 @@ export const EditItemForm = () => {
             id="3"
             label="Unit of stock"
             variant="outlined"
-            defaultValue={product.unitId}
+            defaultValue={product?.unitId}
             name="unit"
           >
             <MenuItem value="" disabled>
@@ -101,7 +110,7 @@ export const EditItemForm = () => {
           <FormLabel>Status</FormLabel>
           <RadioGroup
             name="status"
-            defaultValue={product.isDisabled ? "disabled" : "active"}
+            defaultValue={product?.isDisabled ? "disabled" : "active"}
           >
             <FormControlLabel
               value="active"
@@ -119,7 +128,7 @@ export const EditItemForm = () => {
           <FormLabel>Essentiality</FormLabel>
           <RadioGroup
             name="essentiality"
-            defaultValue={product.isEssential ? "essential" : "non-essential"}
+            defaultValue={product?.isEssential ? "essential" : "non-essential"}
           >
             <FormControlLabel
               value="essential"
@@ -134,7 +143,7 @@ export const EditItemForm = () => {
           </RadioGroup>
         </FormControl>
         <Button variant="contained" type="submit">
-          Update product
+          {submitButtonLabel}
         </Button>
       </FormControl>
     </form>

@@ -4,15 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Inventory } from "./components/Inventory";
-import { AddItemForm } from "./components/AddItemForm";
+import { InventoryView } from "./components/views/InventoryView";
+import { AddItemForm } from "./components/inventory/AddItemForm";
 import { ShoppingList } from "./components/ShoppingList";
 import { Categories } from "./components/Categories";
-import { Statistics } from "./components/Statistics";
-import { Stores } from "./components/Stores";
+import { StatisticsView } from "./components/views/StatisticsView";
+import { StoresView } from "./components/views/StoresView";
 import { MyAccount } from "./components/MyAccount";
 import { Settings } from "./components/Settings";
-import { EditItemForm } from "./components/EditItemForm";
+import { EditItemForm } from "./components/inventory/EditItemForm";
 import { AddUnitForm } from "./components/AddUnitForm";
 import { EditUnitForm } from "./components/EditUnitForm";
 import { AddStoreForm } from "./components/AddStoreForm";
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "inventory",
-        element: <Inventory />,
+        element: <InventoryView />,
       },
       {
         path: "add-item",
@@ -53,11 +53,11 @@ const router = createBrowserRouter([
       },
       {
         path: "statistics",
-        element: <Statistics />,
+        element: <StatisticsView />,
       },
       {
         path: "stores",
-        element: <Stores />,
+        element: <StoresView />,
       },
       {
         path: "add-store",

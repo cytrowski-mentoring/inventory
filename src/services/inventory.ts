@@ -2,24 +2,14 @@ import { InventoryItem } from "../utils";
 import { makeGetAll } from "./common";
 
 export const apiAddProductToInventory = (
-  quantity: number,
-  name: string,
-  unitId: number,
-  isDisabled: boolean,
-  isEssential: boolean
+  data: Omit<InventoryItem, 'id'>
 ) => {
   return fetch("http://localhost:9000/inventory", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      name: name,
-      unitId: unitId,
-      quantity: quantity,
-      isDisabled: isDisabled,
-      isEssential: isEssential,
-    }),
+    body: JSON.stringify(data),
   });
 };
 
@@ -33,25 +23,14 @@ export const apiRemoveProduct = (productId: number) => {
 };
 
 export const apiEditProduct = (
-  productId: number,
-  quantity: number,
-  name: string,
-  unitId: number,
-  isDisabled: boolean,
-  isEssential: boolean
+  { id, ...data }: InventoryItem
 ) => {
-  return fetch(`http://localhost:9000/inventory/${productId}`, {
+  return fetch(`http://localhost:9000/inventory/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      name: name,
-      unitId: unitId,
-      quantity: quantity,
-      isDisabled: isDisabled,
-      isEssential: isEssential,
-    }),
+    body: JSON.stringify(data),
   });
 };
 

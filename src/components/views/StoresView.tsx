@@ -7,11 +7,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import { Store } from "../utils";
+import { Store } from "../../utils";
 import { useNavigate, Link } from "react-router-dom";
-import { apiRemoveStore, getStores } from "../services/stores";
+import { apiRemoveStore, getStores } from "../../services/stores";
 
-export const Stores = () => {
+export const StoresView = () => {
   const navigate = useNavigate();
   const [stores, setStores] = useState<Store[]>([]);
   useEffect(() => {
