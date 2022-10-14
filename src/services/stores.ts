@@ -1,10 +1,7 @@
 import { Store } from "../utils";
+import { makeGetAll } from "./common";
 
-export const getStores = (): Promise<Store[]> => {
-  return fetch(`http://localhost:9000/stores`).then((response) =>
-    response.json()
-  );
-};
+export const getStores = makeGetAll<Store>(`http://localhost:9000/stores`)
 
 export const getStore = (storeId: number): Promise<Store> => {
   return fetch(`http://localhost:9000/stores/${storeId}`).then((response) =>

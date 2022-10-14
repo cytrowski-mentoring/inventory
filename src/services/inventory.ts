@@ -1,4 +1,5 @@
 import { InventoryItem } from "../utils";
+import { makeGetAll } from "./common";
 
 export const apiAddProductToInventory = (
   quantity: number,
@@ -54,11 +55,7 @@ export const apiEditProduct = (
   });
 };
 
-export const getInventory = (): Promise<InventoryItem[]> => {
-  return fetch("http://localhost:9000/inventory").then((response) =>
-    response.json()
-  );
-};
+export const getInventory = makeGetAll<InventoryItem>("http://localhost:9000/inventory")
 
 export const getProduct = (itemId: number): Promise<InventoryItem> => {
   return fetch(`http://localhost:9000/inventory/${itemId}`).then((response) =>

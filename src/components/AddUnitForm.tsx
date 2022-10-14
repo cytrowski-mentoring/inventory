@@ -12,7 +12,7 @@ export const AddUnitForm = () => {
     };
     const label = target.label.value;
 
-    apiAddUnit(label).then(() => {
+    apiAddUnit({ label }).then(() => {
       navigate("/settings");
     });
     target.label.value = "";
