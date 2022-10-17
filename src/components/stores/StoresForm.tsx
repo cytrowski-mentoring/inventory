@@ -1,14 +1,25 @@
 import { Button, FormControl, TextField } from "@mui/material";
 import { FormEventHandler, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Store } from "../utils";
-import { apiEditStore, getStore } from "../services/stores";
+import { Store } from "../../utils";
+import { getStore } from "../../services/stores";
 
-export const EditStoreForm = () => {
+interface Props {
+  onFormComplete: (data: Store) => Promise<Response>;
+  submitButtonLabel: string;
+}
+
+export const StoreForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   const { storeId } = useParams();
   const [store, setStore] = useState<Store | null>(null);
 
   useEffect(() => {
+    getStore(Number(storeId)).then(setStore);
+  }, [storeId]);
+  useEffect(() => {
+    if (storeId === undefined) {
+      return;
+    }
     getStore(Number(storeId)).then(setStore);
   }, [storeId]);
 
@@ -19,10 +30,17 @@ export const EditStoreForm = () => {
       label: HTMLInputElement;
     };
     const label = target.label.value;
-    apiEditStore(Number(storeId), label).then(() => {
+
+    target.label.value = "";
+
+    const data = {
+      id: Number(storeId),
+      label,
+    };
+
+    onFormComplete(data).then(() => {
       navigate("/stores");
     });
-    target.label.value = "";
   };
 
   if (store === null) {
@@ -37,10 +55,10 @@ export const EditStoreForm = () => {
           label="Label"
           variant="outlined"
           name="label"
-          defaultValue={store.label}
+          defaultValue={store?.label}
         />
         <Button variant="contained" type="submit">
-          Update store
+          {submitButtonLabel}
         </Button>
       </FormControl>
     </form>

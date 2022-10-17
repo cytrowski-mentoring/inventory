@@ -32,7 +32,7 @@ const menuitems = [
   { label: "Statistics", href: "/statistics" },
   { label: "Stores", href: "/stores" },
   { label: "My Account", href: "/my-account" },
-  { label: "Settings", href: "/settings" },
+  { label: "Units", href: "/units" },
 ];
 
 function App() {

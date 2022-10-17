@@ -34,6 +34,7 @@ export const InventoryForm = ({ onFormComplete, submitButtonLabel }: Props) => {
     }
     getProduct(Number(itemId)).then(setProduct);
   }, [itemId]);
+
   const navigate = useNavigate();
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -62,7 +63,7 @@ export const InventoryForm = ({ onFormComplete, submitButtonLabel }: Props) => {
     onFormComplete(data).then(() => {
       navigate("/inventory");
     });
-    
+
     target.name.value = "";
     target.quantity.value = "";
     target.unit.value = "";

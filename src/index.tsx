@@ -4,19 +4,19 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { InventoryView } from "./components/views/InventoryView";
+import { InventoryView } from "./components/inventory/InventoryView";
 import { AddItemForm } from "./components/inventory/AddItemForm";
 import { ShoppingList } from "./components/ShoppingList";
 import { Categories } from "./components/Categories";
-import { StatisticsView } from "./components/views/StatisticsView";
-import { StoresView } from "./components/views/StoresView";
+import { StatisticsView } from "./components/StatisticsView";
+import { StoresView } from "./components/stores/StoresView";
 import { MyAccount } from "./components/MyAccount";
-import { Settings } from "./components/Settings";
+import { UnitsView } from "./components/units/UnitsView";
 import { EditItemForm } from "./components/inventory/EditItemForm";
-import { AddUnitForm } from "./components/AddUnitForm";
-import { EditUnitForm } from "./components/EditUnitForm";
-import { AddStoreForm } from "./components/AddStoreForm";
-import { EditStoreForm } from "./components/EditStoreForm";
+import { AddUnitForm } from "./components/units/AddUnitForm";
+import { EditUnitForm } from "./components/units/EditUnitForm";
+import { AddStoreForm } from "./components/stores/AddStoreForm";
+import { EditStoreForm } from "./components/stores/EditStoreForm";
 
 const router = createBrowserRouter([
   {
@@ -72,8 +72,8 @@ const router = createBrowserRouter([
         element: <MyAccount />,
       },
       {
-        path: "settings",
-        element: <Settings />,
+        path: "units",
+        element: <UnitsView />,
       },
     ],
   },

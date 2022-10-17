@@ -1,7 +1,7 @@
 import { Store } from "../utils";
 import { makeGetAll } from "./common";
 
-export const getStores = makeGetAll<Store>(`http://localhost:9000/stores`)
+export const getStores = makeGetAll<Store>(`http://localhost:9000/stores`);
 
 export const getStore = (storeId: number): Promise<Store> => {
   return fetch(`http://localhost:9000/stores/${storeId}`).then((response) =>
@@ -9,15 +9,13 @@ export const getStore = (storeId: number): Promise<Store> => {
   );
 };
 
-export const apiAddStore = (label: string) => {
+export const apiAddStore = (data: Omit<Store, "id">) => {
   return fetch("http://localhost:9000/stores", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      label: label,
-    }),
+    body: JSON.stringify(data),
   });
 };
 
@@ -30,14 +28,12 @@ export const apiRemoveStore = (storeId: number) => {
   });
 };
 
-export const apiEditStore = (storeId: number, label: string) => {
-  return fetch(`http://localhost:9000/stores/${storeId}`, {
+export const apiEditStore = ({ id, ...data }: Store) => {
+  return fetch(`http://localhost:9000/stores/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      label: label,
-    }),
+    body: JSON.stringify(data),
   });
 };

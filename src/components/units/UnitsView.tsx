@@ -7,11 +7,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import { Unit } from "../utils";
+import { Unit } from "../../utils";
 import { useNavigate, Link } from "react-router-dom";
-import { apiRemoveUnit, getUnits } from "../services/units";
+import { apiRemoveUnit, getUnits } from "../../services/units";
 
-export const Settings = () => {
+export const UnitsView = () => {
   const navigate = useNavigate();
   const [units, setUnits] = useState<Unit[]>([]);
   useEffect(() => {
@@ -29,9 +29,7 @@ export const Settings = () => {
             <Fragment key={unit.id}>
               <ListItem>
                 <ListItemButton>
-                  <ListItemText
-                    primary={unit.label}
-                  />
+                  <ListItemText primary={unit.label} />
                 </ListItemButton>
                 <ListItemButton
                   onClick={() => {

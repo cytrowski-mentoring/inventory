@@ -8,16 +8,14 @@ export const apiAddUnit = makeAdd<Omit<Unit, "id">>(
   "http://localhost:9000/units"
 );
 
-export const apiRemoveUnit = makeRemove<Unit>("http://localhost:9000/units")
+export const apiRemoveUnit = makeRemove<Unit>("http://localhost:9000/units");
 
-export const apiEditUnit = (unitId: number, label: string) => {
-  return fetch(`http://localhost:9000/units/${unitId}`, {
+export const apiEditUnit = ({ id, ...data }: Unit) => {
+  return fetch(`http://localhost:9000/units/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      label: label,
-    }),
+    body: JSON.stringify(data),
   });
 };
