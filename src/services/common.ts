@@ -6,7 +6,7 @@ export const makeGetAll =
 
 export const makeGetOne =
   <T extends { id: number }>(url: string) =>
-  (id: T['id']): Promise<T> => {
+  (id: T["id"]): Promise<T> => {
     return fetch(`${url}/${id}`).then((response) => response.json());
   };
 
@@ -30,8 +30,18 @@ export const makeRemove =
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
   };
 
 // TODO implement
-export const makeUpdate = () => {}
+export const makeUpdate =
+  <T extends { id: number }>(url: string) =>
+  (data: T) => {
+    return fetch(`${url}/${data.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  };

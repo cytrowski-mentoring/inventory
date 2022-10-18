@@ -1,32 +1,15 @@
 import { Store } from "../utils";
-import { makeGetAll } from "./common";
+import { makeAdd, makeGetAll, makeGetOne, makeRemove } from "./common";
 
 export const getStores = makeGetAll<Store>(`http://localhost:9000/stores`);
 
-export const getStore = (storeId: number): Promise<Store> => {
-  return fetch(`http://localhost:9000/stores/${storeId}`).then((response) =>
-    response.json()
-  );
-};
+export const getStore = makeGetOne<Store>("http://localhost:9000/stores");
 
-export const apiAddStore = (data: Omit<Store, "id">) => {
-  return fetch("http://localhost:9000/stores", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-};
+export const apiAddStore = makeAdd<Omit<Store, "id">>(
+  "http://localhost:9000/stores"
+);
 
-export const apiRemoveStore = (storeId: number) => {
-  return fetch(`http://localhost:9000/stores/${storeId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-};
+export const apiRemoveStore = makeRemove<Store>("http://localhost:9000/stores");
 
 export const apiEditStore = ({ id, ...data }: Store) => {
   return fetch(`http://localhost:9000/stores/${id}`, {
