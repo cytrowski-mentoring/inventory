@@ -17,6 +17,9 @@ import { AddUnitForm } from "./components/units/AddUnitForm";
 import { EditUnitForm } from "./components/units/EditUnitForm";
 import { AddStoreForm } from "./components/stores/AddStoreForm";
 import { EditStoreForm } from "./components/stores/EditStoreForm";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -84,7 +87,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

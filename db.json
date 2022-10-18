@@ -81,10 +81,6 @@
       "label": "unit",
       "type": "quantity",
       "value": 1
-    },
-    {
-      "id": 6,
-      "label": "ups"
     }
   ],
   "stores": [

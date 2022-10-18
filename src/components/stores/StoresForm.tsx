@@ -14,9 +14,6 @@ export const StoreForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   const [store, setStore] = useState<Store | null>(null);
 
   useEffect(() => {
-    getStore(Number(storeId)).then(setStore);
-  }, [storeId]);
-  useEffect(() => {
     if (storeId === undefined) {
       return;
     }
@@ -43,7 +40,7 @@ export const StoreForm = ({ onFormComplete, submitButtonLabel }: Props) => {
     });
   };
 
-  if (store === null) {
+  if (store === null && storeId !== undefined) {
     return <div>Loading store data</div>;
   }
 

@@ -2,7 +2,8 @@ import { Button, FormControl, TextField } from "@mui/material";
 import { FormEventHandler, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Unit } from "../../utils";
-import { apiEditUnit, getUnit } from "../../services/units";
+import { getUnit } from "../../services/units";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   onFormComplete: (data: Unit) => Promise<Response>;
@@ -12,10 +13,8 @@ interface Props {
 export const UnitForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   const { unitId } = useParams();
   const [unit, setUnit] = useState<Unit | null>(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    getUnit(Number(unitId)).then(setUnit);
-  }, [unitId]);
   useEffect(() => {
     if (unitId === undefined) {
       return;
@@ -39,11 +38,12 @@ export const UnitForm = ({ onFormComplete, submitButtonLabel }: Props) => {
     };
 
     onFormComplete(data).then(() => {
+      queryClient.refetchQueries(["units"]);
       navigate("/units");
     });
   };
 
-  if (unit === null) {
+  if (unit === null && unitId !== undefined) {
     return <div>Loading unit data</div>;
   }
 

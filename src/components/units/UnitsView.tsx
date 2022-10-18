@@ -6,25 +6,35 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
-import { Unit } from "../../utils";
+import { Fragment } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiRemoveUnit, getUnits } from "../../services/units";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const UnitsView = () => {
   const navigate = useNavigate();
-  const [units, setUnits] = useState<Unit[]>([]);
-  useEffect(() => {
-    getUnits().then(setUnits);
-  }, []);
+  const {
+    isLoading,
+    error,
+    data: units,
+    refetch,
+  } = useQuery(["units"], getUnits, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  const { mutate: remove } = useMutation(apiRemoveUnit, {
+    onSuccess: () => refetch(),
+  });
 
   return (
     <>
       <Button variant="contained" type="submit" component={Link} to="/add-unit">
         Add an unit
       </Button>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error.</p>}
       <List>
-        {units.map((unit) => {
+        {units?.map((unit) => {
           return (
             <Fragment key={unit.id}>
               <ListItem>
@@ -40,9 +50,7 @@ export const UnitsView = () => {
                 </ListItemButton>
                 <ListItemButton
                   onClick={() => {
-                    apiRemoveUnit(unit.id).then(() => {
-                      getUnits().then(setUnits);
-                    });
+                    remove(unit.id);
                   }}
                 >
                   Delete
