@@ -1,5 +1,11 @@
 import { Store } from "../utils";
-import { makeAdd, makeGetAll, makeGetOne, makeRemove } from "./common";
+import {
+  makeAdd,
+  makeGetAll,
+  makeGetOne,
+  makeRemove,
+  makeUpdate,
+} from "./common";
 
 export const getStores = makeGetAll<Store>(`http://localhost:9000/stores`);
 
@@ -11,12 +17,4 @@ export const apiAddStore = makeAdd<Omit<Store, "id">>(
 
 export const apiRemoveStore = makeRemove<Store>("http://localhost:9000/stores");
 
-export const apiEditStore = ({ id, ...data }: Store) => {
-  return fetch(`http://localhost:9000/stores/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-};
+export const apiEditStore = makeUpdate<Store>("http://localhost:9000/stores");

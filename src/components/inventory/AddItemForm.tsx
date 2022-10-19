@@ -1,4 +1,3 @@
-
 import { apiAddProductToInventory } from "../../services/inventory";
 import { InventoryForm } from "./InventoryForm";
 

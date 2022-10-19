@@ -33,7 +33,6 @@ export const makeRemove =
     });
   };
 
-// TODO implement
 export const makeUpdate =
   <T extends { id: number }>(url: string) =>
   (data: T) => {

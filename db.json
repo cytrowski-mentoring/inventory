@@ -36,7 +36,7 @@
     {
       "name": "Cx",
       "unitId": 1,
-      "quantity": 5,
+      "quantity": 7,
       "id": 7,
       "label": "am",
       "isDisabled": false,
@@ -45,8 +45,8 @@
     {
       "id": 8,
       "quantity": 4,
-      "name": "M1",
-      "unitId": 5,
+      "name": "Gdańsk",
+      "unitId": 2,
       "isDisabled": true,
       "isEssential": false
     }

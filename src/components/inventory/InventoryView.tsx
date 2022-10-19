@@ -7,34 +7,45 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { InventoryItem } from "../../utils";
 import { Link } from "react-router-dom";
 import { apiRemoveProduct, getInventory } from "../../services/inventory";
 import { getUnits } from "../../services/units";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const InventoryView = () => {
   const navigate = useNavigate();
-  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>([]);
+  const {
+    isLoading,
+    error,
+    data: inventoryItems,
+    refetch,
+  } = useQuery(["inventoryItems"], getInventory, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  const { mutate: remove } = useMutation(apiRemoveProduct, {
+    onSuccess: () => refetch(),
+  });
+
   const { data: units } = useQuery(["units"], getUnits, {
     refetchOnMount: false,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   });
-  useEffect(() => {
-    getInventory().then(setInventoryItems);
-  }, []);
-  const items = inventoryItems.map((item) =>
+
+  const items = inventoryItems?.map((item) =>
     item.unitId === undefined
       ? item
       : { ...item, unit: units?.find((unit) => unit.id === item.unitId)?.label }
   );
+
   return (
     <>
       <Button variant="contained" type="submit" component={Link} to="/add-item">
         Add a product
       </Button>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error.</p>}
       <TableContainer>
         <Table size="small">
           <TableHead>
@@ -51,7 +62,7 @@ export const InventoryView = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item) => {
+            {items?.map((item) => {
               return (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
@@ -70,9 +81,7 @@ export const InventoryView = () => {
                     </Button>
                     <Button
                       onClick={() => {
-                        apiRemoveProduct(item.id).then(() => {
-                          getInventory().then(setInventoryItems);
-                        });
+                        remove(item.id);
                       }}
                     >
                       Delete

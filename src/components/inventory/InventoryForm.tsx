@@ -15,6 +15,7 @@ import { getProduct } from "../../services/inventory";
 import { getUnits } from "../../services/units";
 import { InventoryItem, Unit } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   onFormComplete: (data: InventoryItem) => Promise<Response>;
@@ -25,6 +26,7 @@ export const InventoryForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   const { itemId } = useParams();
   const [units, setUnits] = useState<Unit[]>([]);
   const [product, setProduct] = useState<InventoryItem | null>(null);
+  const queryClient = useQueryClient();
   useEffect(() => {
     getUnits().then(setUnits);
   }, []);
@@ -61,6 +63,7 @@ export const InventoryForm = ({ onFormComplete, submitButtonLabel }: Props) => {
     };
 
     onFormComplete(data).then(() => {
+      queryClient.refetchQueries(["inventoryItems"]);
       navigate("/inventory");
     });
 

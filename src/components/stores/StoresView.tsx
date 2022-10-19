@@ -6,17 +6,26 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
-import { Store } from "../../utils";
+import { Fragment } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { apiRemoveStore, getStores } from "../../services/stores";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const StoresView = () => {
   const navigate = useNavigate();
-  const [stores, setStores] = useState<Store[]>([]);
-  useEffect(() => {
-    getStores().then(setStores);
-  }, []);
+
+  const {
+    isLoading,
+    error,
+    data: stores,
+    refetch,
+  } = useQuery(["stores"], getStores, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  const { mutate: remove } = useMutation(apiRemoveStore, {
+    onSuccess: () => refetch(),
+  });
 
   return (
     <>
@@ -28,15 +37,15 @@ export const StoresView = () => {
       >
         Add a store
       </Button>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error.</p>}
       <List>
-        {stores.map((store) => {
+        {stores?.map((store) => {
           return (
             <Fragment key={store.id}>
               <ListItem>
                 <ListItemButton>
-                  <ListItemText
-                    primary={store.label}
-                  />
+                  <ListItemText primary={store.label} />
                 </ListItemButton>
                 <ListItemButton
                   onClick={() => {
@@ -47,9 +56,7 @@ export const StoresView = () => {
                 </ListItemButton>
                 <ListItemButton
                   onClick={() => {
-                    apiRemoveStore(store.id).then(() => {
-                      getStores().then(setStores);
-                    });
+                    remove(store.id);
                   }}
                 >
                   Delete
