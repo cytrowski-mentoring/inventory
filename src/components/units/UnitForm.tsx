@@ -1,19 +1,33 @@
 import { Button, FormControl, TextField } from "@mui/material";
-import { FormEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Unit } from "../../utils";
 import { getUnit } from "../../services/units";
 import { useQueryClient } from "@tanstack/react-query";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 interface Props {
   onFormComplete: (data: Unit) => Promise<Response>;
   submitButtonLabel: string;
 }
 
+type Inputs = {
+  label: string;
+};
+
 export const UnitForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   const { unitId } = useParams();
   const [unit, setUnit] = useState<Unit | null>(null);
   const queryClient = useQueryClient();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({
+    defaultValues: {
+      label: "",
+    },
+  });
 
   useEffect(() => {
     if (unitId === undefined) {
@@ -23,21 +37,14 @@ export const UnitForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   }, [unitId]);
 
   const navigate = useNavigate();
-  const handleSubmit: FormEventHandler = (event) => {
-    event.preventDefault();
-    const target = event.target as unknown as {
-      label: HTMLInputElement;
-    };
-    const label = target.label.value;
-
-    target.label.value = "";
-
-    const data = {
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    const payload = {
       id: Number(unitId),
-      label,
+      label: data.label,
     };
 
-    onFormComplete(data).then(() => {
+    onFormComplete(payload).then(() => {
       queryClient.refetchQueries(["units"]);
       navigate("/units");
     });
@@ -46,17 +53,28 @@ export const UnitForm = ({ onFormComplete, submitButtonLabel }: Props) => {
   if (unit === null && unitId !== undefined) {
     return <div>Loading unit data</div>;
   }
-
+  console.log(errors);
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl margin="normal">
-        <TextField
-          id="1"
-          label="Label"
-          variant="outlined"
+        <Controller
+          control={control}
+          rules={{ required: "This is required." }}
           name="label"
-          defaultValue={unit?.label}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              id="1"
+              label="Label"
+              variant="outlined"
+              name="label"
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+              error={!!errors.label}
+            />
+          )}
         />
+
         <Button variant="contained" type="submit">
           {submitButtonLabel}
         </Button>

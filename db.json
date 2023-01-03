@@ -81,6 +81,10 @@
       "label": "unit",
       "type": "quantity",
       "value": 1
+    },
+    {
+      "id": 9,
+      "label": "s"
     }
   ],
   "stores": [
